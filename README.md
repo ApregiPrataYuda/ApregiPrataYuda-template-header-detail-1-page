@@ -1,0 +1,1 @@
+# ApregiPrataYuda-template-header-detail-1-page

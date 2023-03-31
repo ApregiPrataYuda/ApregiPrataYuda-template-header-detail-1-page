@@ -1,0 +1,276 @@
+<style type="text/css">
+#drop_zone {
+    border: 2px dashed #bbb;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    padding: 20px;
+    text-align: center;
+    font: 20pt bold 'Vollkorn';
+    color: #bbb;
+}
+
+.btn_kapluk {
+	margin: 5px;
+}
+
+.dataTables_length, .dataTables_filter {
+	display: none;
+}
+
+.tagify{    
+	height: auto;
+}
+</style>
+<section class="content-header ml-4">
+  <div class="container-fluid">
+    <div class="row mb-2">
+      <div class="col-sm-6">
+        <h1></h1>
+        <!-- <h3><span class="badge badge-secondary">Master Class Form Tambah</span></h3> -->
+      </div>
+      <div class="col-sm-6">
+        <ol class="breadcrumb float-sm-right">
+          <li class="breadcrumb-item"><a class="text-secondary" href="<?= site_url('') ?>"><span class="badge badge-outline-secondary">Kembali</span></a></li>
+          <!-- <li class="breadcrumb-item"><span class="badge badge-secondary">Master Class Form</span></a></li> -->
+        </ol>
+      </div>
+    </div>
+  </div><!-- /.container-fluid -->
+</section>
+
+
+<form action="" enctype="multipart/form-data" id="formupload" method="post" class="form">
+<section class="content">
+    <div id="flash" data-flash="<?= $this->session->flashdata('pesan') ?>">
+      <div id="flasherr" data-flasherr="<?= $this->session->flashdata('error') ?>">
+        <!-- Default box -->
+        <div class="card">
+          <div class="card-header" style="background-color:RGB(40, 178, 170);">
+            <h3 class="card-title  text-light"></h3>
+             
+            <div class="card-tools">
+              <button type="button" class="btn btn-tool" data-card-widget="collapse" title="Collapse">
+                <i class="fas fa-minus"></i>
+              </button>
+              <button type="button" class="btn btn-tool" data-card-widget="remove" title="Remove">
+                <i class="fas fa-times"></i>
+              </button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="card">
+              <div class="card-header">
+                <span class="badge badge-secondary">Header</span>
+               <div class="row">
+                <div class="col-md-4">
+                  <table width="100%">
+                      <tr>
+                        <th style="width:40px">kode:</th>
+                        <td><input type="text" class="form-control col-md-12"></td>
+                      </tr>
+
+                      <tr>
+                        <th style="width:40px">Nama:</th>
+                        <td><input type="text" class="form-control col-md-12"></td>
+                      </tr>
+
+                      <tr>
+                        <th style="width:40px">Tanggal:</th>
+                        <td><input type="text" class="form-control col-md-8"></td>
+                      </tr>
+                  </table>
+                </div>
+                <div class="col-md-4">
+                <table width="100%">
+                    <tr>
+                        <th style="width:40px">kategori:</th>
+                        <td>
+                          <select name="" id="" class="form-control col-md-10">
+                            <option value=""></option>
+                          </select>
+                        </td>
+                      </tr>
+
+
+                      <tr>
+                        <th style="width:40px">merk:</th>
+                        <td>
+                          <select name="" id="" class="form-control col-md-10">
+                            <option value=""></option>
+                          </select>
+                        </td>
+                      </tr>
+
+                      <tr>
+                        <th style="width:40px">warna:</th>
+                        <td>
+                          <select name="" id="" class="form-control col-md-10">
+                            <option value=""></option>
+                          </select>
+                        </td>
+                      </tr>
+               </div>
+               </table>
+             </div>
+
+             <div class="col-md-4">
+                <table width="100%">
+                     <tr>
+                        <th style="width:40px">status:</th>
+                        <td>
+                          <select name="" id="" class="form-control col-md-8">
+                            <option value=""></option>
+                          </select>
+                        </td>
+                      </tr>
+
+
+                      <tr>
+                        <th style="width:40px">Keterangan:</th>
+                        <td><textarea name="" id="" cols="5" rows="3" class="form-control col-md-12" ></textarea>
+                        </td>
+                      </tr>
+               </div>
+               </table>
+             </div>
+           </div>
+             <hr>
+      
+           <span class="badge badge-secondary">Detail</span>
+           <div class="row">
+           <table style="width: 100%;">
+					<tr>
+                        <label for="example-text-input" class="col-2 col-form-label">Bulk Data</label>
+                                   <div class="col-8 mr-4">
+                                       <div id="drop_zone">
+                                           <input name="csv_file" class="form-control csv_file" id="csv_file" type="file" style="display: none;">Drop files here or click to upload.
+                                       </div>
+                                       <a href="<?= base_url('./assets/temp/pelanggan.csv') ?>" class="btn btn-xs btn-outline-primary mt-1">Download Template</a>
+                                       <p><i>Format .csv file must use separator semicolon (;)</i> </p> 
+                                       <output id="list"></output>
+                                      
+					</tr>
+        
+				</table>
+           </div>
+           <button type="button" id="btn_verify" class="btn btn-outline-secondary btn-sm ml-2" onclick="Verifydata()"><i class="fa fa-file"></i> Verify</button>
+          </div>
+         
+
+          <div class="card-body">
+            <div class="card">
+              <div class="card-header">
+              <span class="badge badge-secondary">Data Detail</span>
+              <div class="row">
+			     <div class="col-lg-12 col-md-12 col-sm-12">
+             <table id="ass" class="table table-bordered table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">QTY</th>
+                      <th scope="col"> Harga</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                  </tbody>
+                </table>
+			       </div>
+            
+            </div>
+            </div>
+            <div class="row ml-auto mb-3 mr-5 mt-3">
+          <button type="button" class="btn btn-outline-secondary btn-sm ml-2"  onclick="save()"> <i class="fa fa-save"></i> Simpan</button>
+        </div>
+
+
+          <div class="card-footer">
+            <p class="footer">Page rendered in <strong>{elapsed_time}</strong> seconds. <?php echo (ENVIRONMENT === 'development') ?  'CodeIgniter Version <strong>' . CI_VERSION . '</strong>' : '' ?></p>
+          </div>
+          <!-- /.card-footer-->
+        </div>
+        <!-- /.card -->
+  </section>
+</form>
+
+  <script>
+    //triger inputan hidden
+$('#drop_zone').click(function() {
+		$('.csv_file')[0].click();
+	});
+
+
+ 
+//mencetak nama-type file
+function take_file(event)
+{
+    var files = event.target.files; // FileList object
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      	output.push('<strong>'+escape(f.name)+'</strong><br>'+f.type+'<br>'+f.size+' bytes');
+    }
+    $('#list').html(output);
+
+    $('#btn_verify').show();
+}
+
+document.getElementById('csv_file').addEventListener('change', take_file, false);
+
+
+
+//drop file
+function drop_file(event)
+{
+    event.preventDefault();
+    event.stopPropagation();
+
+    var files = event.dataTransfer.files; // FileList object.
+
+    // files is a FileList of File objects. List some properties.
+    var output = [];
+    for (var i = 0, f; f = files[i]; i++) {
+      	output.push('<strong>'+escape(f.name)+'</strong><br>'+f.type+'<br>'+f.size+' bytes');
+    }
+    $('#list').html(output);
+
+    $('#btn_verify').show();
+
+    $('#csv_file').prop('files', event.dataTransfer.files);
+    $('#csv_file').trigger('change');
+}
+
+//drag file
+function drag_file(event)
+{
+    event.preventDefault();
+    event.stopPropagation();
+    event.dataTransfer.dropEffect = 'copy'; // Explicitly show this is a copy.
+}
+
+// Setup the dnd listeners.
+var dropZone = document.getElementById('drop_zone');
+if(dropZone)
+{
+	dropZone.addEventListener('dragover', drag_file, false);
+	dropZone.addEventListener('drop', drop_file, false);
+}
+
+
+function Verifydata()
+{
+   $.ajax({
+      url:'<?= base_url('pembelian/bacadata')?>',
+      method:'POST',
+      data: new FormData($("#formupload")[0]),
+      cache:false,
+      contentType: false,
+      processData: false,
+      success: function(rest){
+          $('#ass tbody').html(rest)
+      }
+   })
+}
+
+  
+  </script>
